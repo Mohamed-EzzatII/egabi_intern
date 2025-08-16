@@ -1,0 +1,1645 @@
+{
+	"info": {
+		"_postman_id": "43a872a4-bd6b-4e1d-b20e-0efc96725425",
+		"name": "University Spring Boot",
+		"description": "This Postman collection contains APIs for managing a university system with four main components:\n\n- Students\n    \n- Faculty\n    \n- Courses\n    \n- Enrollments\n    \n\n## Base URL\n\n`http://localhost:8080/api` (or your deployed server URL)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35027529"
+	},
+	"item": [
+		{
+			"name": "Students APIs",
+			"item": [
+				{
+					"name": "get all students",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all students by faculty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/list/faculty/commerce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"list",
+								"faculty",
+								"commerce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all students by level",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/list/level/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"list",
+								"level",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count students",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"student_name\":\"Mohamed\",\n    \"student_level\":2,\n    \"faculty_id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"studentName\":\"Mohamed Ezzat\",\n    \"studentLevel\":2,\n    \"facultyName\":\"Faculty of Commerce\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find student by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{faculty.facultyName}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() };\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/find/name/a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"find",
+								"name",
+								"a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find student by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/find/id/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"find",
+								"id",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete student by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/delete/id/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"delete",
+								"id",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete student by name",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/delete/name/Mohamed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"delete",
+								"name",
+								"Mohamed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update student information",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"studentName\":\"Mohamed Ezzat\",\n    \"studentLevel\":2,\n    \"facultyName\":\"Faculty of Commerce\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/students/update/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"students",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "## Base URL\n\n`http://localhost:8080/students/api`  \n\n### 1\\. Get All Students\n\n**Endpoint**: `GET /students/list`  \n**Description**: Retrieve all students  \n**Response**: List of student objects\n\n### 2\\. Get Students by Faculty\n\n**Endpoint**: `GET /students/list/faculty/{faculty_name}`  \n**Description**: Get students belonging to a specific faculty  \n**Path Parameter**: `faculty_name` (string)  \n**Response**: List of student objects\n\n### 3\\. Get Students by Level\n\n**Endpoint**: `GET /students/list/level/{level}`  \n**Description**: Get students by academic level  \n**Path Parameter**: `level` (integer)  \n**Response**: List of student objects\n\n### 4\\. Count Students\n\n**Endpoint**: `GET /students/count`  \n**Description**: Count The number of students  \n**Path Parameter**: None  \n**Response**: number of students\n\n### 5\\. Add New Student\n\n**Endpoint**: `POST /students/add`  \n**Description**: Create a new student  \n**Request Body**:\n\njson\n\n``` json\n{\n    \"studentName\": \"string\",\n    \"studentLevel\": integer,\n    \"facultyName\": \"string\"\n}\n\n ```\n\n**Response**: Created student object\n\n### 6\\. Find Student by name\n\n**Endpoint**: `GET /students/name/{name}`  \n**Description**: get the students with name  \n**Path Parameter**: name of the student as string  \n**Response**: list of students with matching name\n\n### 7\\. Find Student by id\n\n**Endpoint**: `GET /students/id/{id}`  \n**Description**: get the student with id  \n**Path Parameter**: numberof the student as integer  \n**Response**: student with matching id\n\n### 8\\. Delete Student by ID\n\n**Endpoint**: `DELETE /students/delete/id/{id}`  \n**Description**: Delete a student by ID  \n**Path Parameter**: `id` (integer)  \n**Response**: Deleted student objec\n\n### 9\\. Delete Student by Name\n\n**Endpoint**: `DELETE /students/delete/name/{name}`  \n**Description**: Delete a student by Name  \n**Path Parameter**: name (String)  \n**Response**: Deleted student object\n\n### 10\\. Update Student Information\n\n**Endpoint**: `Put /students/update/{id}`  \n**Description**: Update student by id  \n**Request Body**:\n\njson\n\n``` json\n{\n    \"studentName\":\"String\",\n    \"studentLevel\":Integer,\n    \"facultyName\":\"String\"\n}\n\n ```\n\n**Response**: Updated Information"
+		},
+		{
+			"name": "Faculty APIs",
+			"item": [
+				{
+					"name": "get all faculties",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get courses in faculty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/list/courses/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"list",
+								"courses",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get students in faculty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/list/students/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"list",
+								"students",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count faculty",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"student_name\":\"Mohamed\",\n    \"student_level\":2,\n    \"faculty_id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new faculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"facultyName\": \"Faculty of Law\",\n    \"specialization\": \"English Section\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find faculty by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{faculty.facultyName}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() };\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/find/name/english",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"find",
+								"name",
+								"english"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find facultyby id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/find/id/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"find",
+								"id",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete faculty by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/delete/id/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"delete",
+								"id",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete faculty by name",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/delete/name/law",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"delete",
+								"name",
+								"law"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update faculty information",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"facultyName\": \"Faculty of Medicine wrong\",\n    \"specialization\": \"Human Medicine wrong\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties/update/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "## Base URL\n\n`http://localhost:8080/faculties`\n\n### 1.Get All Faculties\n\n**Endpoint**: `GET /faculties/list`  \n**Description**: Retrieve all faculty members  \n**Response**:\n\n``` json\n[\n    {\n        \"facultyId\": 1,\n        \"facultyName\": \"Computer Science\",\n        \"specialization\": \"Programming\"\n    },\n    {\n        \"facultyId\": 2,\n        \"facultyName\": \"Engineering\",\n        \"specialization\": \"Electronics\"\n    }\n]\n\n ```\n\n### 2\\. Get Faculty by ID\n\n**Endpoint**: `GET /faculties/id/{id}`  \n**Description**: Get a specific faculty member by ID  \n**Path Parameter**:\n\n- `id` (integer) - Faculty ID\n    \n\n**Response**:\n\n``` json\n{\n    \"facultyId\": 1,\n    \"facultyName\": \"Computer Science\",\n    \"specialization\": \"Programming\",\n    \"students\": [\n        {\n            \"studentId\": 101,\n            \"studentName\": \"John Doe\"\n        }\n    ],\n    \"courses\": [\n        {\n            \"courseId\": 1001,\n            \"courseName\": \"Data Structures\"\n        }\n    ]\n}\n\n ```\n\n### 3\\. get Faculty by Name\n\n**Endpoint**: `GET /faculties/name/{name}`  \n**Description**: Search for faculties by name (partial match)  \n**Path Parameter**:\n\n- `name` (string) - Faculty name or part of name\n    \n\n**Response**: List of matching faculty objects\n\n### 4\\. Count Faculties\n\n**Endpoint**: `GET /faculties/count`  \n**Description**: Get the total number of faculties  \n**Response**:\n\n``` json\n5\n\n ```\n\n### 5\\. add New Faculty\n\n**Endpoint**: `POST /faculties/add`  \n**Description**: Add a new faculty to the system  \n**Request Body**:\n\n``` json\n{\n    \"facultyName\": \"Medicine\",\n    \"specialization\": \"Clinical Research\"\n}\n\n ```\n\n**Response**: Created faculty object\n\n### 6\\. Update Faculty Information\n\n**Endpoint**: `PUT /faculties/update/{id}`  \n**Description**: Update faculty details  \n**Path Parameter**:\n\n- `id` (integer) - Faculty ID to update\n    \n\n**Request Body**:\n\n``` json\n{\n    \"facultyName\": \"Computer Science and Engineering\",\n    \"specialization\": \"Advanced Programming\"\n}\n\n ```\n\n**Response**: Updated faculty object\n\n### 7\\. Delete Faculty by ID\n\n**Endpoint**: `DELETE /faculties/delete/id/{id}`  \n**Description**: Remove a faculty by ID  \n**Path Parameter**:\n\n- `id` (integer) - Faculty ID to delete\n    \n\n**Response**: Deleted faculty object\n\n### 8\\. Delete Faculty by Name\n\n**Endpoint**: `DELETE /faculties/delete/name/{name}`  \n**Description**: Remove faculty by name (exact match)  \n**Path Parameter**:\n\n- `name` (string) - Exact faculty name\n    \n\n**Response**: Deleted faculty object\n\n### 9\\. Get Faculty Courses\n\n**Endpoint**: `GET /faculties/{id}/courses`  \n**Description**: Get all courses offered by a faculty  \n**Path Parameter**:\n\n- `id` (integer) - Faculty ID\n    \n\n**Response**: List of course objects\n\n### 10\\. Get Faculty Students\n\n**Endpoint**: `GET /faculties/{id}/students`  \n**Description**: Get all students belonging to a faculty  \n**Path Parameter**:\n\n- `id` (integer) - Faculty ID\n    \n\n**Response**: List of student objects"
+		},
+		{
+			"name": "Course APIs",
+			"item": [
+				{
+					"name": "get all courses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get courses in faculty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/list/faculty/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"list",
+								"faculty",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get courses with min level",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Student Level</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{student_level}}</td>\r",
+									"            <td>{{faculty.faculty_name}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/list/level/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"list",
+								"level",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count courses",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"student_name\":\"Mohamed\",\n    \"student_level\":2,\n    \"faculty_id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"courseName\": \"Arduino\",\n    \"minLevel\": 2,\n    \"facultyId\": 1,\n    \"facultyName\": \"Faculty of Engineering\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find course by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Student ID</th>\r",
+									"        <th>Student Name</th>\r",
+									"        <th>Faculty Name</th>\r",
+									"        <th>Specialization</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{student_id}}</td>\r",
+									"            <td>{{student_name}}</td>\r",
+									"            <td>{{faculty.facultyName}}</td>\r",
+									"            <td>{{faculty.specialization}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() };\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/find/name/Arduino",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"find",
+								"name",
+								"Arduino"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find course by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/find/id/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"find",
+								"id",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete course by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/delete/id/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"delete",
+								"id",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete course by name",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/delete/name/arduino",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"delete",
+								"name",
+								"arduino"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update course information",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"courseName\": \"Arduino sssss\",\n    \"minLevel\": 2,\n    \"facultyId\": 1,\n    \"facultyName\": \"Faculty of Engineering SSS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/courses/update/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"courses",
+								"update",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "## Base URL\n\n`http://localhost:8080/courses`\n\n### 1\\. Get All Courses\n\n**Endpoint**: `GET /courses/list`  \n**Description**: Retrieve all courses  \n**Response**:\n\n``` json\n[\n    {\n        \"courseId\": Integer,\n        \"courseName\": \"String\",\n        \"minLevel\": Integer,\n        \"faculty\": {\n            \"facultyId\": 1Integer\n            \"facultyName\": \"String\"\n        }\n    },\n    {\n        \"courseId\": Integer,\n        \"courseName\": \"String\",\n        \"minLevel\": Integer,\n        \"faculty\": {\n            \"facultyId\": Integer,\n            \"facultyName\": \"String\"\n        }\n    }\n]\n\n ```\n\n### 2\\. Find Course by ID\n\n**Endpoint**: `GET /courses/id/{id}`  \n**Path Parameter**:\n\n- `id` (integer) - Course ID\n    \n\n**Response**:\n\n``` json\n{\n    \"courseId\": Integer,\n    \"courseName\": \"String\",\n    \"minLevel\": Integer,\n    \"faculty\": {\n        \"facultyId\": Integer,\n        \"facultyName\": \"String\"\n    }\n}\n\n ```\n\n### 3\\. Find Courses by Name\n\n**Endpoint**: `GET /courses/name/{name}`  \n**Path Parameter**:\n\n- `name` (string) - Course name or partial name\n    \n\n**Response**: List of matching course objects\n\n### 4\\. Count Courses\n\n**Endpoint**: `GET /courses/count`  \n**Response**:\n\n``` json\nInteger\n\n ```\n\n### 5\\. Add New Course\n\n**Endpoint**: `POST /courses/add`  \n**Request Body**:\n\n``` json\n{\n    \"courseName\": \"String\",\n    \"minLevel\": Integer,\n    \"facultyId\": Integer\n}\n\n ```\n\n**Response**: Created course object\n\n### 6\\. Update Course Information\n\n**Endpoint**: `PUT /courses/update/{id}`  \n**Path Parameter**:\n\n- `id` (integer) - Course ID\n    \n\n**Request Body**:\n\n``` json\n{\n    \"courseName\": \"String\",\n    \"minLevel\": Integer\n}\n\n ```\n\n**Response**: Updated course object\n\n### 7\\. Delete Course by ID\n\n**Endpoint**: `DELETE /courses/delete/id/{id}`  \n**Path Parameter**:\n\n- `id` (integer) - Course ID\n    \n\n**Response**: Deleted course object\n\n### 8\\. Get Courses In Faculty\n\n**Endpoint**: `GET /courses/faculty/{facultyId}`  \n**Path Parameter**:\n\n- `facultyId` (integer) - Faculty ID\n    \n\n**Response**: List of course objects\n\n### 9\\. Get Courses with Minimum Level\n\n**Endpoint**: `GET /courses/level/{minLevel}`  \n**Path Parameter**:\n\n- `minLevel` (integer) - Minimum level requirement\n    \n\n**Response**: List of course objects\n\n### 10\\. Delete Course by Name\n\n**Endpoint**: `DELETE /courses/delete/name/{name}`  \n**Path Parameter**:\n\n- name (String) - Course Name\n    \n\n**Response**: Deleted course object"
+		},
+		{
+			"name": "Enrollment APIs",
+			"item": [
+				{
+					"name": "course enroll",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"courseId\":4,\n    \"studentId\":4\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/enrollments/enroll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enrollments",
+								"enroll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update grade",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"courseId\":3,\n    \"studentId\":4,\n    \"grade\":10\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/enrollments/grade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enrollments",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unenroll",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"courseId\":3,\n    \"studentId\":4,\n    \"grade\":10\n\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/enrollments/unenroll/course/3/student/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enrollments",
+								"unenroll",
+								"course",
+								"3",
+								"student",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get enrolled courses for student",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get enrolled students in a course",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get enrollments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/enrollments/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enrollments",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get grade of student in course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/enrollments/grade/course/5/student/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enrollments",
+								"grade",
+								"course",
+								"5",
+								"student",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "## Base URL\n\n`http://localhost:8080/enrollments`\n\n## Enrollment APIs\n\n### 1\\. Enroll Student in Course\n\n**Endpoint**: `POST /enrollments/enroll`  \n**Description**: Register a student for a course  \n**Request Body**:\n\n``` json\n{\n    \"courseId\": Double,\n    \"studentId\": Double\n}\n\n ```\n\n**Success Response**:\n\n``` json\n{\n    \"course\": {\n        \"courseId\": Double,\n        \"courseName\": \"String\"\n    },\n    \"student\": {\n        \"studentId\": Double,\n        \"studentName\": \"String\"\n    },\n    \"grade\": null\n}\n\n ```\n\n**Error Responses**:\n\n- `400`: Student level too low for course\n    \n- `409`: Student already enrolled\n    \n\n### 2\\. Update Student Grade\n\n**Endpoint**: `PUT /enrollments/grade`  \n**Description**: Record or update a student's grade  \n**Request Body**:\n\n``` json\n{\n    \"courseId\": Double,\n    \"studentId\": Double,\n    \"grade\": Double\n}\n\n ```\n\n**Response**: Updated enrollment record\n\n### 3\\. Unenroll Student\n\n**Endpoint**: `DELETE /enrollments/unenroll/course/{courseId}/student/{studentId}`  \n**Path Parameters**:\n\n- `courseId` (integer)\n    \n- `studentId` (integer)\n    \n\n**Response**: `204 No Content`\n\n### 4\\. Get Student Enrollments\n\n**Endpoint**: `GET /enrollments/student/{studentId}`  \n**Description**: List all courses a student is taking  \n**Response**:\n\n``` json\n[\n    {\n        \"courseId\": Double,\n        \"courseName\": \"String\",\n        \"grade\": Double\n    },\n    {\n        \"courseId\": Double,\n        \"courseName\": \"String\",\n        \"grade\": Double\n    }\n]\n\n ```\n\n### 5\\. Get Course Roster\n\n**Endpoint**: `GET /enrollments/course/{courseId}`  \n**Description**: List all students in a course  \n**Response**:\n\n``` json\n[\n    {\n        \"studentId\": Double,\n        \"studentName\": \"String\",\n        \"grade\": Double\n    },\n    {\n        \"studentId\": Double,\n        \"studentName\": \"String\",\n        \"grade\": Double\n    }\n]\n\n ```\n\n### 6\\. Get Specific Grade\n\n**Endpoint**: `GET /enrollments/grade/course/{courseId}/student/{studentId}`  \n**Description**: Check a student's grade in a course  \n**Response**:\n\n``` json\n{\n    \"grade\": Double\n}\n\n ```\n\n### 7\\. Get All Enrollments\n\n**Endpoint**: `GET /enrollments/list`  \n**Description**: Administrative view of all enrollments  \n**Response**: List of complete enrollment records"
+		}
+	]
+}
