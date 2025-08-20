@@ -2,21 +2,28 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "Course")
+@SQLDelete(sql = "UPDATE course SET deleted = true WHERE course_id = ?;")
+@Where(clause = "deleted = false") // filter queries automatically
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
     private Integer courseId;
 
+    @Setter
     @Column(name = "course_name", nullable = false, length = 100)
     private String courseName;
 
     @Column(name = "min_level", nullable = false)
     private Integer minLevel;
 
+    @Setter
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "faculty_id", nullable = false)
@@ -35,10 +42,6 @@ public class Course {
         return courseName;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
     public Integer getMinLevel() {
         return minLevel;
     }
@@ -52,10 +55,6 @@ public class Course {
 
     public Faculty getFaculty() {
         return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
     }
 
 }

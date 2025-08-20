@@ -7,6 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/students")
+@CrossOrigin(origins = "http://localhost:4100") // Angular app
 public class StudentController {
     private final StudentService studentService;
 

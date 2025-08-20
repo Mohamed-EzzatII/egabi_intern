@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/faculties")
+@CrossOrigin(origins = "http://localhost:4100") // Angular app
 public class FacultyController {
     private final FacultyService facultyService;
 

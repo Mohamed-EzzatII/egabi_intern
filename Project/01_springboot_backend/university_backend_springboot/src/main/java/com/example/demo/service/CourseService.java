@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.DTO.CourseDTO;
 import com.example.demo.model.Course;
+import com.example.demo.model.Enrollment;
 import com.example.demo.model.Faculty;
 import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.EnrollmentRepository;
 import com.example.demo.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,12 @@ import java.util.List;
 public class CourseService {
     private final CourseRepository courseRepository;
     private final FacultyRepository facultyRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
-    public CourseService(CourseRepository courseRepository, FacultyRepository facultyRepository) {
+    public CourseService(CourseRepository courseRepository, FacultyRepository facultyRepository, EnrollmentRepository enrollmentRepository) {
         this.courseRepository = courseRepository;
         this.facultyRepository = facultyRepository;
+        this.enrollmentRepository = enrollmentRepository;
     }
 
     public List<Course> getAllCourses() {
@@ -33,8 +37,7 @@ public class CourseService {
             return null;
         }
 
-        Faculty faculty = facultyRepository.findById(courseDTO.getFacultyId())
-                .orElse(null);
+        Faculty faculty = facultyRepository.findByFacultyNameContainingIgnoreCase(courseDTO.getFacultyName().toLowerCase()).getFirst();
 
         if (faculty == null) {
             System.out.println("Faculty not found");
@@ -74,6 +77,10 @@ public class CourseService {
         Course course = courseRepository.findById(id).orElse(null);
         if (course != null) {
             courseRepository.deleteById(id);
+        }
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse(course);
+        for (Enrollment enrollment : enrollments) {
+            enrollmentRepository.deleteById(enrollment.getId());
         }
         return course;
     }

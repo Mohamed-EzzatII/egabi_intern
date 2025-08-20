@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/enrollments")
+@CrossOrigin(origins = "http://localhost:4100") // Angular app
 public class EnrollmentController {
     private final EnrollmentService enrollmentService;
 
