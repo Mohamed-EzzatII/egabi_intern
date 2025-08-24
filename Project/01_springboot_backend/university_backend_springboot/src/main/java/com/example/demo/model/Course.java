@@ -3,13 +3,10 @@ package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "Course")
-@SQLDelete(sql = "UPDATE course SET deleted = true WHERE course_id = ?;")
-@Where(clause = "deleted = false") // filter queries automatically
+
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

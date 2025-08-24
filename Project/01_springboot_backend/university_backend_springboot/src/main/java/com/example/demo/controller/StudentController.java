@@ -1,8 +1,11 @@
 package com.example.demo.controller;
+
 import com.example.demo.DTO.StudentDTO;
 import com.example.demo.model.Student;
 import com.example.demo.service.StudentService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,17 +19,45 @@ public class StudentController {
     }
 
     @GetMapping("/list")
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    public List<StudentDTO> getAllStudents() {
+        List<Student> studentList = studentService.getAllStudents();
+        List<StudentDTO> studentDTOList = new ArrayList<>();
+        int count = 0;
+        for (Student student : studentList) {
+            studentDTOList.add(new StudentDTO());
+            studentDTOList.get(count).setStudentName(student.getStudent_name());
+            studentDTOList.get(count).setStudentLevel(student.getStudent_level());
+            studentDTOList.get(count).setFacultyName(student.getFaculty().getFacultyName());
+            count++;
+        }
+        return studentDTOList;
     }
 
     @GetMapping("/list/faculty/{faculty_name}")
-    public List<Student> getAllStudents(@PathVariable String faculty_name) {
-        return studentService.getAllStudentsByFaculty(faculty_name);
+    public List<StudentDTO> getAllStudents(@PathVariable String faculty_name) {
+        List<Student> studentList = studentService.getAllStudentsByFaculty(faculty_name);
+        List<StudentDTO> studentDTOList = new ArrayList<>();
+        int count = 0;
+        for (Student student : studentList) {
+            studentDTOList.add(new StudentDTO());
+            studentDTOList.get(count).setStudentName(student.getStudent_name());
+            studentDTOList.get(count).setStudentLevel(student.getStudent_level());
+            studentDTOList.get(count).setFacultyName(student.getFaculty().getFacultyName());
+            count++;
+        }
+        return studentDTOList;
     }
     @GetMapping("/list/level/{level}")
-    public List<Student> getAllStudents(@PathVariable Integer level) {
-        return studentService.getAllStudentsByLevel(level);
+    public List<StudentDTO> getAllStudents(@PathVariable Integer level) {
+        List<Student> studentList = studentService.getAllStudentsByLevel(level);
+        List<StudentDTO> studentDTOList = new ArrayList<>();
+        for (Student student : studentList) {
+            studentDTOList.add(new StudentDTO());
+            studentDTOList.getFirst().setStudentName(student.getStudent_name());
+            studentDTOList.getFirst().setStudentLevel(student.getStudent_level());
+            studentDTOList.getFirst().setFacultyName(student.getFaculty().getFacultyName());
+        }
+        return studentDTOList;
     }
 
     @GetMapping("/count")
@@ -35,34 +66,68 @@ public class StudentController {
     }
 
     @PostMapping("/add")
-    public Student addStudent(@RequestBody StudentDTO student) {
+    public StudentDTO addStudent(@RequestBody StudentDTO student) {
         System.out.println(student.toString());
-        return studentService.addNewStudent(student);
+        Student student1 = studentService.addNewStudent(student);
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentName(student1.getStudent_name());
+        studentDTO.setStudentLevel(student1.getStudent_level());
+        studentDTO.setFacultyName(student1.getFaculty().getFacultyName());
+        return studentDTO;
     }
 
     @GetMapping("/find/name/{name}")
-    public List<Student> findStudent(@PathVariable String name) {
-        return studentService.findStudentByName(name);
+    public List<StudentDTO> findStudent(@PathVariable String name) {
+        List <Student> students= studentService.findStudentByName(name);
+        List<StudentDTO> studentDTOList = new ArrayList<>();
+        int count = 0;
+        for (Student student : students) {
+            studentDTOList.add(new StudentDTO());
+            studentDTOList.get(count).setStudentName(student.getStudent_name());
+            studentDTOList.get(count).setStudentLevel(student.getStudent_level());
+            studentDTOList.get(count).setFacultyName(student.getFaculty().getFacultyName());
+            count++;
+        }
+        return studentDTOList;
     }
 
     @GetMapping("/find/id/{id}")
-    public Student findStudent(@PathVariable Integer id) {
-        return studentService.findStudentById(id);
+    public StudentDTO findStudent(@PathVariable Integer id) {
+        Student student = studentService.findStudentById(id);
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentName(student.getStudent_name());
+        studentDTO.setStudentLevel(student.getStudent_level());
+        studentDTO.setFacultyName(student.getFaculty().getFacultyName());
+        return studentDTO;
     }
 
     @DeleteMapping("/delete/id/{id}")
-    public Student deleteStudent(@PathVariable Integer id) {
-        return studentService.deleteStudentById(id);
+    public StudentDTO deleteStudent(@PathVariable Integer id) {
+        Student student = studentService.deleteStudentById(id);
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentName(student.getStudent_name());
+        studentDTO.setStudentLevel(student.getStudent_level());
+        studentDTO.setFacultyName(student.getFaculty().getFacultyName());
+        return studentDTO;
     }
 
     @DeleteMapping("/delete/name/{name}")
-    public Student deleteStudent(@PathVariable String name) {
-        return studentService.deleteStudentByName(name);
+    public StudentDTO deleteStudent(@PathVariable String name) {
+        Student student = studentService.deleteStudentByName(name);
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentName(student.getStudent_name());
+        studentDTO.setStudentLevel(student.getStudent_level());
+        studentDTO.setFacultyName(student.getFaculty().getFacultyName());
+        return studentDTO;
     }
 
     @PutMapping("/update/{id}")
-    public Student updateStudent(@PathVariable Integer id, @RequestBody StudentDTO student) {
-        return studentService.updateStudentById(id, student);
+    public StudentDTO updateStudent(@PathVariable Integer id, @RequestBody StudentDTO student) {
+        Student student1 = studentService.updateStudentById(id, student);
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentName(student1.getStudent_name());
+        studentDTO.setStudentLevel(student1.getStudent_level());
+        studentDTO.setFacultyName(student1.getFaculty().getFacultyName());
+        return studentDTO;
     }
-
 }

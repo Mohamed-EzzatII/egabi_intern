@@ -2,14 +2,11 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import java.util.List;
 
 @Entity
-@SQLDelete(sql = "UPDATE faculty SET deleted = true WHERE faculty_id = ?")
-@Where(clause = "deleted = false") // filter queries automatically
+
 @Table(name = "Faculty")
 public class Faculty {
     @Id

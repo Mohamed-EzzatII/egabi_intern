@@ -9,6 +9,7 @@ import com.example.demo.repository.EnrollmentRepository;
 import com.example.demo.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,8 +24,17 @@ public class CourseService {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public List<CourseDTO> getAllCourses() {
+        List<CourseDTO> courses = new ArrayList<>();
+        List<Course> courseList = courseRepository.findAll();
+        for (Course course : courseList) {
+            CourseDTO courseDTO = new CourseDTO();
+            courseDTO.setCourseName(course.getCourseName());
+            courseDTO.setMinLevel(course.getMinLevel());
+            courseDTO.setFacultyName(course.getFaculty().getFacultyName());
+            courses.add(courseDTO);
+        }
+        return courses;
     }
 
     public long countCourses() {
@@ -43,17 +53,28 @@ public class CourseService {
             System.out.println("Faculty not found");
             return null;
         }
-
-        Course newCourse = new Course();
-        newCourse.setCourseName(courseDTO.getCourseName());
-        newCourse.setMinLevel(courseDTO.getMinLevel());
-        newCourse.setFaculty(faculty);
-
-        return courseRepository.save(newCourse);
+        List<Course> newCourse = courseRepository.findByCourseNameContainingIgnoreCase(courseDTO.getCourseName());
+        if(newCourse.isEmpty()) {
+            newCourse.add(new Course());
+            newCourse.getFirst().setCourseName(courseDTO.getCourseName());
+            newCourse.getFirst().setMinLevel(courseDTO.getMinLevel());
+            newCourse.getFirst().setFaculty(faculty);
+            return courseRepository.save(newCourse.getFirst());
+        }
+        return null;
     }
 
-    public List<Course> findCourseByName(String name) {
-        return courseRepository.findByCourseNameContainingIgnoreCase(name);
+    public List<CourseDTO> findCourseByName(String name) {
+        List<CourseDTO> courses = new ArrayList<>();
+        List<Course> courseList = courseRepository.findByCourseNameContainingIgnoreCase(name);
+        for (Course course : courseList) {
+            CourseDTO courseDTO = new CourseDTO();
+            courseDTO.setCourseName(course.getCourseName());
+            courseDTO.setMinLevel(course.getMinLevel());
+            courseDTO.setFacultyName(course.getFaculty().getFacultyName());
+            courses.add(courseDTO);
+        }
+        return courses;
     }
 
     public Course findCourseById(Integer id) {
@@ -69,8 +90,17 @@ public class CourseService {
         return courseRepository.findByFaculty(faculty);
     }
 
-    public List<Course> findCoursesByMinLevel(Integer minLevel) {
-        return courseRepository.findByMinLevel(minLevel);
+    public List<CourseDTO> findCoursesByMinLevel(Integer minLevel) {
+        List<CourseDTO> courses = new ArrayList<>();
+        List<Course> courseList = courseRepository.findByMinLevelLessThanEqual(minLevel);
+        for (Course course : courseList) {
+            CourseDTO courseDTO = new CourseDTO();
+            courseDTO.setCourseName(course.getCourseName());
+            courseDTO.setMinLevel(course.getMinLevel());
+            courseDTO.setFacultyName(course.getFaculty().getFacultyName());
+            courses.add(courseDTO);
+        }
+        return courses;
     }
 
     public Course deleteCourseById(Integer id) {

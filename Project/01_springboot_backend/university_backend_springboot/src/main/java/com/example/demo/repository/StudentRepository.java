@@ -8,5 +8,5 @@ import java.util.List;
 public interface StudentRepository extends JpaRepository<Student,Integer> {
     List<Student> findByStudentName(String student_name);
     List<Student> findByStudentNameContainingIgnoreCase(String student_name);
-    void deleteById(Integer id);
+    List<Student> findByStudentNameIgnoreCase(String student_name);
 }

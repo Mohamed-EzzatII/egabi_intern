@@ -10,4 +10,6 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     List<Course> findByFaculty(Faculty faculty);
     List<Course> findByCourseNameContainingIgnoreCase( String name);
     List<Course> findByMinLevel(Integer minLevel);
+    List<Course> findByCourseNameIgnoreCase( String name);
+    List<Course> findByMinLevelLessThanEqual(Integer minLevel);
 }

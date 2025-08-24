@@ -2,12 +2,9 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Entity
-@SQLDelete(sql = "UPDATE enrollment SET deleted = true WHERE course_id = ? AND student_id = ?")
-@Where(clause = "deleted = false")
+
 @Table(name = "Enrollment")
 public class Enrollment {
     @EmbeddedId

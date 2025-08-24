@@ -18,7 +18,7 @@ public class CourseController {
     }
 
     @GetMapping("/list")
-    public List<Course> getAllCourses() {
+    public List<CourseDTO> getAllCourses() {
         return courseService.getAllCourses();
     }
 
@@ -28,7 +28,7 @@ public class CourseController {
     }
 
     @GetMapping("/list/level/{minLevel}")
-    public List<Course> getCoursesByMinLevel(@PathVariable Integer minLevel) {
+    public List<CourseDTO> getCoursesByMinLevel(@PathVariable Integer minLevel) {
         return courseService.findCoursesByMinLevel(minLevel);
     }
 
@@ -44,7 +44,7 @@ public class CourseController {
     }
 
     @GetMapping("/find/name/{name}")
-    public List<Course> findCourse(@PathVariable String name) {
+    public List<CourseDTO> findCourse(@PathVariable String name) {
         return courseService.findCourseByName(name);
     }
 

@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.EnrollmentDTO;
-import com.example.demo.model.Enrollment;
+import com.example.demo.DTO.EnrollmentResDTO;
 import com.example.demo.service.EnrollmentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +19,16 @@ public class EnrollmentController {
     }
 
     @PostMapping("/enroll")
-    public Enrollment enrollStudent(@RequestBody EnrollmentDTO enrollmentDTO) {
+    public EnrollmentResDTO enrollStudent(@RequestBody EnrollmentDTO enrollmentDTO) {
         return enrollmentService.enrollStudent(enrollmentDTO);
+    }
+    @PostMapping("/enroll/student/{stname}/course/{coursename}")
+    public EnrollmentResDTO enrollStudentName(@PathVariable String stname, @PathVariable String coursename) {
+        return enrollmentService.enrollStudentByName(stname,coursename);
     }
 
     @PutMapping("/grade")
-    public Enrollment updateGrade(@RequestBody EnrollmentDTO enrollmentDTO) {
+    public EnrollmentResDTO updateGrade(@RequestBody EnrollmentDTO enrollmentDTO) {
         return enrollmentService.updateGrade(enrollmentDTO);
     }
 
@@ -36,12 +40,12 @@ public class EnrollmentController {
     }
 
     @GetMapping("/student/{studentId}")
-    public List<Enrollment> getStudentEnrollments(@PathVariable Integer studentId) {
+    public List<EnrollmentResDTO> getStudentEnrollments(@PathVariable Integer studentId) {
         return enrollmentService.getEnrollmentsByStudent(studentId);
     }
 
     @GetMapping("/course/{courseId}")
-    public List<Enrollment> getCourseEnrollments(@PathVariable Integer courseId) {
+    public List<EnrollmentResDTO> getCourseEnrollments(@PathVariable Integer courseId) {
         return enrollmentService.getEnrollmentsByCourse(courseId);
     }
 
@@ -53,7 +57,7 @@ public class EnrollmentController {
     }
 
     @GetMapping("/list")
-    public List<Enrollment> getAllEnrollments() {
+    public List<EnrollmentDTO> getAllEnrollments() {
         return enrollmentService.getAllEnrollments();
     }
 }

@@ -1,13 +1,18 @@
 package com.example.demo.service;
 
 import com.example.demo.DTO.EnrollmentDTO;
-import com.example.demo.model.*;
+import com.example.demo.DTO.EnrollmentResDTO;
+import com.example.demo.model.Course;
+import com.example.demo.model.Enrollment;
+import com.example.demo.model.EnrollmentId;
+import com.example.demo.model.Student;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.EnrollmentRepository;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +31,7 @@ public class EnrollmentService {
     }
 
     @Transactional
-    public Enrollment enrollStudent(EnrollmentDTO enrollmentDTO) {
+    public EnrollmentResDTO enrollStudent(EnrollmentDTO enrollmentDTO) {
         Student student = studentRepository.findById(enrollmentDTO.getStudentId())
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
@@ -51,12 +56,43 @@ public class EnrollmentService {
         if (enrollmentDTO.getGrade() != null) {
             enrollment.setGrade(enrollmentDTO.getGrade().doubleValue());
         }
+        Enrollment newEnroll = enrollmentRepository.save(enrollment);
+        EnrollmentResDTO enrollmentResDTO = new EnrollmentResDTO();
+        enrollmentResDTO.setStudentName(newEnroll.getStudent().getStudent_name());
+        enrollmentResDTO.setCourseName(newEnroll.getCourse().getCourseName());
+        enrollmentResDTO.setGrade(newEnroll.getGrade() == null ? 0 : newEnroll.getGrade().intValue());
 
-        return enrollmentRepository.save(enrollment);
+        return enrollmentResDTO;
+    }
+    @Transactional
+    public EnrollmentResDTO enrollStudentByName(String stname,String coursename) {
+        List<Student> students = studentRepository.findByStudentNameIgnoreCase(stname);
+        List<Course> courses = courseRepository.findByCourseNameIgnoreCase(coursename);
+
+        Course course = courses.get(0);
+        Student student = students.get(0);
+        // Check if student meets course level requirement
+        if (student.getStudent_level() < course.getMinLevel()) {
+            throw new IllegalArgumentException("Student level too low for this course");
+        }
+
+
+        Enrollment enrollment = new Enrollment();
+        enrollment.setId(new EnrollmentId(course.getCourseId(), student.getStudent_id()));
+        enrollment.setStudent(student);
+        enrollment.setCourse(course);
+
+        Enrollment newEnroll = enrollmentRepository.save(enrollment);
+        EnrollmentResDTO enrollmentResDTO = new EnrollmentResDTO();
+        enrollmentResDTO.setStudentName(newEnroll.getStudent().getStudent_name());
+        enrollmentResDTO.setCourseName(newEnroll.getCourse().getCourseName());
+        enrollmentResDTO.setGrade(newEnroll.getGrade() == null ? 0 : newEnroll.getGrade().intValue());
+
+        return enrollmentResDTO;
     }
 
     @Transactional
-    public Enrollment updateGrade(EnrollmentDTO enrollmentDTO) {
+    public EnrollmentResDTO updateGrade(EnrollmentDTO enrollmentDTO) {
         Enrollment enrollment = enrollmentRepository.findById(
                         new EnrollmentId(enrollmentDTO.getCourseId(), enrollmentDTO.getStudentId()))
                 .orElseThrow(() -> new IllegalArgumentException("Enrollment not found"));
@@ -65,7 +101,13 @@ public class EnrollmentService {
             enrollment.setGrade(enrollmentDTO.getGrade().doubleValue());
         }
 
-        return enrollmentRepository.save(enrollment);
+        Enrollment newEnroll = enrollmentRepository.save(enrollment);
+        EnrollmentResDTO enrollmentResDTO = new EnrollmentResDTO();
+        enrollmentResDTO.setStudentName(newEnroll.getStudent().getStudent_name());
+        enrollmentResDTO.setCourseName(newEnroll.getCourse().getCourseName());
+        enrollmentResDTO.setGrade(newEnroll.getGrade() == null ? null : newEnroll.getGrade().intValue());
+
+        return enrollmentResDTO;
     }
 
     @Transactional
@@ -73,16 +115,35 @@ public class EnrollmentService {
         enrollmentRepository.deleteById(new EnrollmentId(courseId, studentId));
     }
 
-    public List<Enrollment> getEnrollmentsByStudent(Integer studentId) {
+    public List<EnrollmentResDTO> getEnrollmentsByStudent(Integer studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
-        return enrollmentRepository.findByStudent(student);
+        List<Enrollment> enrollments = enrollmentRepository.findByStudent(student);
+        List<EnrollmentResDTO> enrollmentResDTOList = new ArrayList<>();
+        for (Enrollment enrollment : enrollments) {
+            EnrollmentResDTO enrollmentResDTO = new EnrollmentResDTO();
+            enrollmentResDTO.setStudentName(enrollment.getStudent().getStudent_name());
+            enrollmentResDTO.setCourseName(enrollment.getCourse().getCourseName());
+            enrollmentResDTO.setGrade(enrollment.getGrade() == null ? null : enrollment.getGrade().intValue());
+            enrollmentResDTOList.add(enrollmentResDTO);
+        }
+        return enrollmentResDTOList;
     }
 
-    public List<Enrollment> getEnrollmentsByCourse(Integer courseId) {
+    public List<EnrollmentResDTO> getEnrollmentsByCourse(Integer courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Course not found"));
-        return enrollmentRepository.findByCourse(course);
+
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse(course);
+        List<EnrollmentResDTO> enrollmentResDTOList = new ArrayList<>();
+        for (Enrollment enrollment : enrollments) {
+            EnrollmentResDTO enrollmentResDTO = new EnrollmentResDTO();
+            enrollmentResDTO.setStudentName(enrollment.getStudent().getStudent_name());
+            enrollmentResDTO.setCourseName(enrollment.getCourse().getCourseName());
+            enrollmentResDTO.setGrade(enrollment.getGrade() == null ? null : enrollment.getGrade().intValue());
+            enrollmentResDTOList.add(enrollmentResDTO);
+        }
+        return enrollmentResDTOList;
     }
 
     public Optional<Double> getStudentGrade(Integer courseId, Integer studentId) {
@@ -90,7 +151,18 @@ public class EnrollmentService {
                 .map(Enrollment::getGrade);
     }
 
-    public List<Enrollment> getAllEnrollments() {
-        return enrollmentRepository.findAll();
+    public List<EnrollmentDTO> getAllEnrollments() {
+        List<Enrollment> enrollments = enrollmentRepository.findAll();
+        List<EnrollmentDTO> enrollmentDTOList = new ArrayList<>();
+        for (Enrollment enrollment : enrollments) {
+            EnrollmentDTO enrollmentDTO = new EnrollmentDTO();
+            enrollmentDTO.setStudentName(enrollment.getStudent().getStudent_name());
+            enrollmentDTO.setCourseName(enrollment.getCourse().getCourseName());
+            enrollmentDTO.setGrade(enrollment.getGrade() == null ? null : enrollment.getGrade().intValue());
+            enrollmentDTO.setCourseId(enrollment.getCourse().getCourseId());
+            enrollmentDTO.setStudentId(enrollment.getStudent().getStudent_id());
+            enrollmentDTOList.add(enrollmentDTO);
+        }
+        return enrollmentDTOList;
     }
 }

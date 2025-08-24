@@ -1,12 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.DTO.StudentDTO;
-import com.example.demo.model.Enrollment;
 import com.example.demo.model.Faculty;
 import com.example.demo.model.Student;
 import com.example.demo.repository.FacultyRepository;
 import com.example.demo.repository.StudentRepository;
-import com.example.demo.repository.EnrollmentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -17,12 +15,10 @@ import java.util.Objects;
 public class StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
-    private final EnrollmentRepository enrollmentRepository;
 
-    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository, EnrollmentRepository enrollmentRepository) {
+    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
         this.facultyRepository = facultyRepository;
-        this.enrollmentRepository = enrollmentRepository;
     }
 
     public List<Student> getAllStudents() {
@@ -67,10 +63,6 @@ public class StudentService {
     public Student deleteStudentById(Integer id) {
         Student student = studentRepository.findById(id).orElse(null);
         studentRepository.deleteAllById(Collections.singleton(id));
-        List<Enrollment> enrollments = enrollmentRepository.findByStudent(student);
-        for (Enrollment enrollment : enrollments) {
-            enrollmentRepository.deleteById(enrollment.getId());
-        }
         return student;
     }
     public Student deleteStudentByName(String name) {
