@@ -1,0 +1,64 @@
+<div class="container mt-4">
+  <!-- Title -->
+  <h2 class="mb-4 text-center">Courses Management</h2>
+
+  <!-- Add Course Form -->
+  <div class="card shadow p-4 mb-4">
+    <h4 class="mb-3">Add New Course</h4>
+    <form>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="courseName" class="form-label">Course Name</label>
+          <input type="text" id="courseName" class="form-control" placeholder="Enter course name" required  
+                 [(ngModel)]="course.courseName" name="courseName">
+        </div>
+        <div class="col-md-6">
+          <label for="minLevel" class="form-label">Minimum Level</label>
+          <input type="number" id="minLevel" class="form-control" placeholder="Enter minimum level" required  
+                 [(ngModel)]="course.minLevel" name="minLevel" min="0">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="facultyName" class="form-label">Faculty Name</label>
+        <input type="text" id="facultyName" class="form-control" placeholder="Enter faculty name" required  
+               [(ngModel)]="course.facultyName" name="facultyName">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addCourse()">Add Course</button>
+    </form>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <input type="text" class="form-control" placeholder="Search course by name..." 
+             [(ngModel)]="searchName" name="searchName">
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-outline-primary w-100" (click)="searchCourse()">Search</button>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-outline-success w-100" (click)="loadCourses()">List All Courses</button>
+    </div>
+  </div>
+
+  <!-- Courses Table -->
+  <div class="card shadow p-3">
+    <h4 class="mb-3">Courses List</h4>
+    <table class="table table-striped table-bordered text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Course Name</th>
+          <th>Minimum Level</th>
+          <th>Faculty Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses">
+          <td>{{ course.courseName }}</td>
+          <td>{{ course.minLevel }}</td>
+          <td>{{ course.facultyName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
