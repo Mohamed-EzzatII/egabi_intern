@@ -5,6 +5,11 @@ import com.example.demo.model.Faculty;
 import com.example.demo.model.Student;
 import com.example.demo.repository.FacultyRepository;
 import com.example.demo.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -12,13 +17,20 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class StudentService {
+public class StudentService{
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    @Autowired
+    AuthenticationManager authManager;
+    @Autowired
+    private JWTService jWTService;
+//    private final PasswordEncoder passwordEncoder;
 
-    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
+    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository/*, PasswordEncoder passwordEncoder*/) {
         this.studentRepository = studentRepository;
         this.facultyRepository = facultyRepository;
+//        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Student> getAllStudents() {
@@ -45,11 +57,20 @@ public class StudentService {
             System.out.println("More than one faculty found");
             return null;
         }
-        Student newStudent = new Student();
-        newStudent.setStudent_name(student.getStudentName());
-        newStudent.setStudent_level(student.getStudentLevel());
-        newStudent.setFaculty(faculty.getFirst());
-        return studentRepository.save(newStudent);
+        Student newStudent = studentRepository.findByUserName(student.getUsername());
+        if(newStudent!=null){
+            return null;
+        }
+        else {
+            newStudent = new Student();
+            newStudent.setStudent_name(student.getStudentName());
+            newStudent.setStudent_level(student.getStudentLevel());
+            newStudent.setPassword(encoder.encode(student.getPassword()));
+            newStudent.setUsername(student.getUsername());
+            newStudent.setRole("ROLE_STUDENT");
+            newStudent.setFaculty(faculty.getFirst());
+            return studentRepository.save(newStudent);
+        }
     }
 
     public List<Student> findStudentByName(String name) {
@@ -58,6 +79,15 @@ public class StudentService {
 
     public Student findStudentById(Integer id) {
         return studentRepository.findById(id).orElse(null);
+    }
+
+    public String login(String username, String password) {
+        Authentication authentication = authManager
+                .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        if (authentication.isAuthenticated()) {
+            return jWTService.generateToken(username,studentRepository.findByUserName(username).getRole());
+        }
+        return "";
     }
 
     public Student deleteStudentById(Integer id) {
@@ -133,4 +163,5 @@ public class StudentService {
         oldStudent.setFaculty(faculties.getFirst());
         return studentRepository.save(oldStudent);
     }
+
 }

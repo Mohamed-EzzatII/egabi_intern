@@ -18,6 +18,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+
     @GetMapping("/list")
     public List<StudentDTO> getAllStudents() {
         List<Student> studentList = studentService.getAllStudents();
@@ -65,16 +66,7 @@ public class StudentController {
         return studentService.countStudents();
     }
 
-    @PostMapping("/add")
-    public StudentDTO addStudent(@RequestBody StudentDTO student) {
-        System.out.println(student.toString());
-        Student student1 = studentService.addNewStudent(student);
-        StudentDTO studentDTO = new StudentDTO();
-        studentDTO.setStudentName(student1.getStudent_name());
-        studentDTO.setStudentLevel(student1.getStudent_level());
-        studentDTO.setFacultyName(student1.getFaculty().getFacultyName());
-        return studentDTO;
-    }
+
 
     @GetMapping("/find/name/{name}")
     public List<StudentDTO> findStudent(@PathVariable String name) {

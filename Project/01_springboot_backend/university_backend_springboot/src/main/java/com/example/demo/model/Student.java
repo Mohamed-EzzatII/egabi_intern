@@ -17,10 +17,67 @@ public class Student {
     @Column(name = "student_level", nullable = false)
     private Integer studentLevel;
 
+    @Column(name="username" ,nullable = false)
+    private String userName;
+
+    @Column(name="password",nullable = false)
+    private String password;
+
+    @Column(name = "role",nullable = false)
+    private String role; // student or admin
+
     @ManyToOne
     @JoinColumn(name = "faculty_id", nullable = false)
     @JsonManagedReference
     private Faculty faculty;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Integer getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
+    }
+
+    public Integer getStudentLevel() {
+        return studentLevel;
+    }
+
+    public void setStudentLevel(Integer studentLevel) {
+        this.studentLevel = studentLevel;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public void setUsername(String username) {
+        this.userName = username;
+    }
 
     // Getters and setters
     public Integer getStudent_id() {
