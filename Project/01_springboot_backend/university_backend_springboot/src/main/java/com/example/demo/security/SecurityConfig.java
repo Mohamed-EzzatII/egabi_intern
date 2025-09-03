@@ -16,6 +16,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -24,52 +29,55 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtFilter jwtFilter;
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        // each req should be authorized
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // Configure CORS
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+
+        // Authorize requests
         http.authorizeHttpRequests(request -> request
-                .requestMatchers("login", "register").permitAll() //allow login and register
+                .requestMatchers("/login", "/register").permitAll() // Public endpoints
                 .requestMatchers("/students/list").hasRole("ADMIN")
+                .requestMatchers("/courses/add").authenticated() // Require authentication for /courses/add
+                .requestMatchers("/enrollments/enroll").hasRole("STUDENT")
                 .anyRequest().authenticated());
 
-        // create new session for every login
+        // Stateless session management
         http.sessionManagement(
-                session -> {
-            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        });
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // disable csrf
+        // Disable CSRF (stateless API)
         http.csrf(AbstractHttpConfigurer::disable);
 
-        // no login form
+        // Use HTTP Basic (optional, depending on your needs)
         http.httpBasic(Customizer.withDefaults());
-        // no login form
-        // http.formLogin(Customizer.withDefaults());
 
+        // Add JWT filter before UsernamePasswordAuthenticationFilter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
-    // in memory
-/*
+    // Define CORS configuration
     @Bean
-    public UserDetailsService userDetailsService(){
-        System.out.println("userDetailsService");
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4100")); // Allow Angular frontend
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true); // Allow credentials if needed
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
-        // using in memory user
-        UserDetails user = User.withDefaultPasswordEncoder() // use the default generated password at first
-                .username("ezzat").password("e@123").roles("Admin").build();
-        return new InMemoryUserDetailsManager(user);
-
-  }
-
- */
-    // db authentication
+    // Database authentication provider
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder(12)); // password hashing
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService); // service for the user authentication
+        daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder(12));
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return daoAuthenticationProvider;
     }
 
