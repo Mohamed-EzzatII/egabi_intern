@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './pages/components/nav-bar/nav-bar.component';
 import { StRegComponent } from './pages/components/st-reg/st-reg.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -27,7 +28,9 @@ import { CourseRegComponent } from './pages/components/course-reg/course-reg.com
 import { FacultyRegComponent } from './pages/components/faculty-reg/faculty-reg.component';
 import { EnrollRegComponent } from './pages/components/enroll-reg/enroll-reg.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { LoginComponent } from './pages/components/login/login.component';
+import { RegisterComponent } from './pages/components/register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +38,9 @@ import { HttpClientModule } from '@angular/common/http';
     NavBarComponent,
     CourseRegComponent,
     FacultyRegComponent,
-    EnrollRegComponent
+    EnrollRegComponent,
+    LoginComponent,
+    RegisterComponent
 
   ],
   imports: [
@@ -44,7 +49,13 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule   
 ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

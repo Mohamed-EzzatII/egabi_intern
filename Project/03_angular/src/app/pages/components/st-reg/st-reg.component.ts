@@ -12,7 +12,9 @@ export class StRegComponent implements OnInit {
   student: Student = {
     studentName: '',
     studentLevel: 0,
-    facultyName: ''
+    facultyName: '',
+    username: 'not available',
+    password: 'not available'
   };
 
   searchName: string = '';
